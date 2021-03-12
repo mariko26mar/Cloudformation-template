@@ -10,7 +10,7 @@ Resources:
       EnableDnsSupport: 'true'
       Tags:
         - Key: Name
-          Value: Lesson-vpc
+          Value: myvpc
 
   #Subnet
   PublicSubnet1a:
@@ -21,7 +21,7 @@ Resources:
       AvailabilityZone: ap-northeast-1a
       Tags:
         - Key: Name
-          Value: lesson-public-subnet
+          Value: my-public-subnet1a
 
   PublicSubnet1c:
     Type: AWS::EC2::Subnet
@@ -31,7 +31,7 @@ Resources:
       AvailabilityZone: ap-northeast-1c
       Tags:
         - Key: Name
-          Value: lesson-public-subnet2
+          Value: my-public-subnet1c
 
   PrivateSubnet1a:
     Type: AWS::EC2::Subnet
@@ -41,7 +41,7 @@ Resources:
       AvailabilityZone: ap-northeast-1a
       Tags:
         - Key: Name
-          Value: lesson-private-subnet
+          Value: my-private-subnet1a
 
   PrivateSubnet1c:
     Type: AWS::EC2::Subnet
@@ -51,7 +51,7 @@ Resources:
       AvailabilityZone: ap-northeast-1c
       Tags:
         - Key: Name
-          Value: lesson-private-subnet2
+          Value: my-private-subnet1c
           
   #Internet Gateway
   Igw:
@@ -59,7 +59,7 @@ Resources:
     Properties:
       Tags:
         - Key: Name
-          Value: Lesson-igw
+          Value: my-igw
 
   #IGWとVPCの接続
   AttachGateway:
@@ -75,7 +75,7 @@ Resources:
       VpcId: !Ref Vpc
       Tags:
         - Key: Name
-          Value: Public-Lesson-rt
+          Value: my-public-rt
 
   PrivateRouteTable:
     Type: AWS::EC2::RouteTable
@@ -83,7 +83,7 @@ Resources:
       VpcId: !Ref Vpc
       Tags:
         - Key: Name
-          Value: Private-Lesson-rt        
+          Value: my-private-rt        
 
   #Subnetとインターネット間のルーティング
   PublicSubnetToInternet:
@@ -143,7 +143,7 @@ Resources:
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
-          Value: Lesson-security-group
+          Value: my-security-group
 
   RdsSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -157,7 +157,7 @@ Resources:
           SourceSecurityGroupId: !Ref EC2SecurityGroup
       Tags:
         - Key: Name
-          Value: Lesson-security-group for RDS
+          Value: my-security-group for RDS
     
   AlbSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -175,7 +175,7 @@ Resources:
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
-          Value: Lesson-alb-security-group
+          Value: my-alb-security-group
 
   #EC2
   EC2Instance:
@@ -193,7 +193,7 @@ Resources:
       IamInstanceProfile: !Ref S3AccessInstanceProfile
       Tags:
         - Key: Name
-          Value: Lesson-Instance
+          Value: myInstance
 
   #IAM Role
   S3AccessRole:
@@ -235,7 +235,7 @@ Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties: 
-      BucketName: s3-lesson-bucket 
+      BucketName: lesson-s3-bucket 
 
   #RDS
   RdsInstance:
@@ -261,7 +261,7 @@ Resources:
           - !Ref PrivateSubnet1c
         Tags:
           - Key: Name
-            Value: RdsSubnetGroup
+            Value: my-rds-subnetg-roup
 
   #DB Security Group
   DBSecurityGroup:
@@ -283,12 +283,12 @@ Resources:
         - !Ref PublicSubnet1c
       Tags:
         - Key: Name
-          Value: lesson-alb
+          Value: my-alb
 
   ElbTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: lesson-target-group
+      Name: my-target-group
       Port: 80
       Protocol: HTTP
       VpcId: !Ref Vpc
